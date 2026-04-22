@@ -369,14 +369,14 @@
                 app:backgroundTint="@null" />
 
             <com.google.android.material.button.MaterialButton
-                android:id="@+id/btn_comma"
+                android:id="@+id/btn_dot"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_margin="2dp"
                 android:layout_weight="25"
                 android:background="@drawable/custom_bg_color"
                 android:backgroundTintMode="add"
-                android:text="@string/comma"
+                android:text="@string/dot"
                 android:textColor="@color/black"
                 android:textSize="24sp"
                 android:textStyle="bold"

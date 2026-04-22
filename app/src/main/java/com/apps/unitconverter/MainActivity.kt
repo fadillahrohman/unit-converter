@@ -10,7 +10,6 @@ import androidx.lifecycle.ViewModelProvider
 import com.google.android.material.button.MaterialButton
 
 class MainActivity : AppCompatActivity() {
-    // Untuk Manggil view model
     private val viewModel by lazy { ViewModelProvider(this).get(MainViewModel::class.java) }
 
     //  Temperature
@@ -31,18 +30,18 @@ class MainActivity : AppCompatActivity() {
     private val btn4 by lazy { findViewById<MaterialButton>(R.id.btn_4) }
     private val btn5 by lazy { findViewById<MaterialButton>(R.id.btn_5) }
     private val btn6 by lazy { findViewById<MaterialButton>(R.id.btn_6) }
-    private val btnPlus by lazy { findViewById<MaterialButton>(R.id.btn_plus) }
+    private val bottonPlus by lazy { findViewById<MaterialButton>(R.id.btn_plus) }
 
     //    Row 3
     private val btn7 by lazy { findViewById<MaterialButton>(R.id.btn_7) }
     private val btn8 by lazy { findViewById<MaterialButton>(R.id.btn_8) }
     private val btn9 by lazy { findViewById<MaterialButton>(R.id.btn_9) }
-    private val btnMinus by lazy { findViewById<MaterialButton>(R.id.btn_minus) }
+    private val bottonMinus by lazy { findViewById<MaterialButton>(R.id.btn_minus) }
 
     //    Row 4
-    private val btnZero by lazy { findViewById<MaterialButton>(R.id.btn_zero) }
-    private val btnComma by lazy { findViewById<MaterialButton>(R.id.btn_comma) }
-    private val btnEqual by lazy { findViewById<MaterialButton>(R.id.btn_equal) }
+    private val bottonZero by lazy { findViewById<MaterialButton>(R.id.btn_zero) }
+    private val buttonDot by lazy { findViewById<MaterialButton>(R.id.btn_dot) }
+    private val buttonEqual by lazy { findViewById<MaterialButton>(R.id.btn_equal) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -54,7 +53,8 @@ class MainActivity : AppCompatActivity() {
             insets
         }
 
-        observeViewModel()
+        observeInput()
+        observeOutput()
 
         btn1.setButtonClickListener("1")
         btn2.setButtonClickListener("2")
@@ -65,23 +65,35 @@ class MainActivity : AppCompatActivity() {
         btn7.setButtonClickListener("7")
         btn8.setButtonClickListener("8")
         btn9.setButtonClickListener("9")
-        btnZero.setButtonClickListener("0")
-        btnPlus.setButtonClickListener("+")
-        btnMinus.setButtonClickListener("-")
-        btnComma.setButtonClickListener(",")
+        bottonZero.setButtonClickListener("0")
+        bottonPlus.setButtonClickListener("+")
+        bottonMinus.setButtonClickListener("-")
+        buttonDot.setButtonClickListener(".")
 
         buttonSwap.setOnClickListener {
             animateInputIndicator()
+            viewModel.switchInputUnit()
+            viewModel.resetInputAndOutput()
         }
 
         buttonClear.setOnClickListener {
             viewModel.clearInput()
         }
+
+        buttonEqual.setOnClickListener {
+            viewModel.convertUnit()
+        }
     }
 
-    private fun observeViewModel() {
+    private fun observeInput() {
         viewModel.input.observe(this) { input ->
             inputCelcius.text = input
+        }
+    }
+
+    private fun observeOutput() {
+        viewModel.output.observe(this) { output ->
+            inputFahrenheit.text = output
         }
     }
 
