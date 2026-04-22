@@ -15,4 +15,13 @@ class MainViewModel : ViewModel() {
             _input.value += value
         }
     }
+
+    fun clearInput() {
+        _input.value =
+            if (_input.value?.length == 1) {
+                "0"
+            } else {
+                _input.value?.dropLast(1)
+            }
+    }
 }

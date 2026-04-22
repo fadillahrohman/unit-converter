@@ -10,7 +10,6 @@ import androidx.lifecycle.ViewModelProvider
 import com.google.android.material.button.MaterialButton
 
 class MainActivity : AppCompatActivity() {
-
     // Untuk Manggil view model
     private val viewModel by lazy { ViewModelProvider(this).get(MainViewModel::class.java) }
 
@@ -26,7 +25,7 @@ class MainActivity : AppCompatActivity() {
     private val btn1 by lazy { findViewById<MaterialButton>(R.id.btn_1) }
     private val btn2 by lazy { findViewById<MaterialButton>(R.id.btn_2) }
     private val btn3 by lazy { findViewById<MaterialButton>(R.id.btn_3) }
-    private val btnClear by lazy { findViewById<MaterialButton>(R.id.btn_clear) }
+    private val buttonClear by lazy { findViewById<MaterialButton>(R.id.btn_clear) }
 
     //    Row 2
     private val btn4 by lazy { findViewById<MaterialButton>(R.id.btn_4) }
@@ -74,14 +73,17 @@ class MainActivity : AppCompatActivity() {
         buttonSwap.setOnClickListener {
             animateInputIndicator()
         }
-    }
 
-    private fun observeViewModel() {
-        viewModel.input.observe(this) {
-            input -> inputCelcius.text = input
+        buttonClear.setOnClickListener {
+            viewModel.clearInput()
         }
     }
 
+    private fun observeViewModel() {
+        viewModel.input.observe(this) { input ->
+            inputCelcius.text = input
+        }
+    }
 
     private fun MaterialButton.setButtonClickListener(value: String) {
         setOnClickListener {
@@ -96,15 +98,14 @@ class MainActivity : AppCompatActivity() {
 
         // Animate button celcius
         buttonCelcius.animate().alpha(0f).y(initialY2).setDuration(350).withEndAction {
-                buttonCelcius.y = initialY2
-                buttonCelcius.alpha = 1f
-            }
+            buttonCelcius.y = initialY2
+            buttonCelcius.alpha = 1f
+        }
 
         // Animate button fahrenheit
         buttonFahrenheit.animate().alpha(0f).y(initialY1).setDuration(350).withEndAction {
-                buttonFahrenheit.y = initialY1
-                buttonFahrenheit.alpha = 1f
-            }
+            buttonFahrenheit.y = initialY1
+            buttonFahrenheit.alpha = 1f
+        }
     }
 }
-
